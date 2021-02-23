@@ -11,14 +11,21 @@ class Game {
             laser: [],
             enemy: []
         }
+        this.prop = {
+            e_s: 400,
+            p_s: 900,
+            l_s: 400
+
+        }
 
         this.init();
     }
     init(){
-        this.objects.player = new Player($('<img src="galery/robbie.png" class="player">'), this.width/2, this.height-60, 0, 50);
+        this.objects.player = new Player($('<img src="galery/robbie.png" class="player">'), this.width/2, this.height-60, this.prop.p_s, this.prop.p_s);
 
         window.requestAnimationFrame(time => {this.loop(time)});
     }
+
 
     loop(time){
         var delta = (time-this.oldTime)/1000;
