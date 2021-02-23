@@ -39,7 +39,7 @@ class GameObject {
         else return pos;
     }
 
-    destroy(object){
+    static destroy(object){
         $(object.element).remove();
         object.isDead = true;
 

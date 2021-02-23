@@ -10,8 +10,8 @@ class Player extends GameObject {
             down:   false,
             space:  false
         };
-        this.height = 60;
-        this.width = 40;
+        this.height = 50;
+        this.width = 30;
 
         this.setupControls();
     }
@@ -46,7 +46,7 @@ class Player extends GameObject {
         }
         if(game.prop.l_cd > 0) game.prop.l_cd -= delta;
 
-        this.x = this.stopOnBorder(this.x, game.width-(this.width/2), this.width/3);
+        this.x = this.stopOnBorder(this.x, game.width-this.width, 0);
         this.y = this.stopOnBorder(this.y, game.height-this.height, 0);
 
         this.updatePosition();
@@ -55,7 +55,7 @@ class Player extends GameObject {
 
     createLaser(){
         var laser = $("<img src='./galery/apple.png' class='laser'>").appendTo("#game-body");
-        game.objects.laser.push(new Laser(laser, this.x, this.y, 0, game.prop.l_s));
+        game.objects.laser.push(new Laser(laser, this.x+5, this.y, 0, game.prop.l_s));
 
     }
 
@@ -75,10 +75,7 @@ class Laser extends GameObject{
 
     update(delta){
         this.y -= this.yv * delta;
-        this.x = this.stopOnBorder(this.x, game.width-(this.width/2), this.width/3);
-        this.y = this.stopOnBorder(this.y, game.height-this.height, 0);
-
-        if(this.y == 0 ) this.destroy(this);
+        if(this.y == 0 ) GameObject.destroy(this);
         game.objects.laser = game.objects.laser.filter(laser => !laser.isDead);
         
         
