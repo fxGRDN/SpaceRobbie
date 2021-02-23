@@ -1,5 +1,3 @@
-
-
 class Game {
     constructor (){
         this.board = $("#game-board");
@@ -14,7 +12,8 @@ class Game {
         this.prop = {
             e_s: 400,
             p_s: 900,
-            l_s: 400
+            l_s: 400,
+            l_cd: 0
 
         }
 
@@ -32,7 +31,8 @@ class Game {
         this.oldTime = time;
 
         this.objects.player.update(delta);
-
+        this.objects.laser.forEach(laser => {  laser.update(delta) });
+        
         window.requestAnimationFrame(time => {this.loop(time)});
     }
 }
