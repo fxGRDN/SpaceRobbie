@@ -1,19 +1,16 @@
 class GameObject {
 
-    constructor(element, x, y, xv, yv){
+    constructor(element, x, y, xv, yv, _w, _h){
 
         this.element = element;
         this.x = x;
         this.y = y;
         this.xv = xv;
         this.yv = yv;
-        
-        //attributes
-        this.isColiding = false;
+        this.height = _h;
+        this.width = _w;
 
         this.place();
-        
-        
     }
 
     place(){
@@ -44,6 +41,8 @@ class GameObject {
         object.isDead = true;
 
     }
+
+    
 }
 
 

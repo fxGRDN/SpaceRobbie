@@ -1,7 +1,7 @@
 class Player extends GameObject {
 
-    constructor (element, x, y, vx, vy){
-        super(element, x, y, vx, vy);
+    constructor(element, x, y, xv, yv, _w, _h){
+        super(element, x, y, xv, yv, _w, _h);
 
         this.keys = {
             left:   false,
@@ -10,9 +10,6 @@ class Player extends GameObject {
             down:   false,
             space:  false
         };
-        this.height = 50;
-        this.width = 30;
-
         this.setupControls();
     }
 
@@ -41,8 +38,8 @@ class Player extends GameObject {
         if(this.keys.up) this.y -= this.yv * delta;
         if(this.keys.down) this.y += this.yv * delta
         if(this.keys.space && game.prop.l_cd <= 0){
-        this.createLaser();
-        game.prop.l_cd = 0.3;
+            this.createLaser();
+            game.prop.l_cd = 0.3; 
         }
         if(game.prop.l_cd > 0) game.prop.l_cd -= delta;
 
@@ -54,8 +51,8 @@ class Player extends GameObject {
     }
 
     createLaser(){
-        var laser = $("<img src='./galery/apple.png' class='laser'>").appendTo("#game-body");
-        game.objects.laser.push(new Laser(laser, this.x+5, this.y, 0, game.prop.l_s));
+        var laser = $("<img src='./galery/apple.png' class='laser'>")
+        game.objects.laser.push(new Laser(laser, this.x+5, this.y, 0, game.prop.l_s, 20, 20));
 
     }
 
@@ -64,18 +61,15 @@ class Player extends GameObject {
 
 class Laser extends GameObject{
 
-    constructor (element, x, y, vx, vy){
-        super(element, x, y, vx, vy);
+    constructor(element, x, y, xv, yv, _w, _h){
+        super(element, x, y, xv, yv, _w, _h);
 
-        this.height = 20;
-        this.width = 20;
-
-        this.updatePosition();
+        this.place();
     }
 
     update(delta){
         this.y -= this.yv * delta;
-        if(this.y == 0 ) GameObject.destroy(this);
+        if(this.y <= 0 ) GameObject.destroy(this);
         game.objects.laser = game.objects.laser.filter(laser => !laser.isDead);
         
         
