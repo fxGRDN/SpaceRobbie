@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "outDir": "./built",
+    "allowJs": true,
+    "target": "ESNEXT"
+  },
+  "include": ["./src/**/*"],
+  "watchOptions": {
+    "watchDirectory": "useFsEvents",
+    "fallbackPolling": "dynamicPriority"
+  }
+}

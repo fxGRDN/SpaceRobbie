@@ -1,0 +1,53 @@
+body {
+    background-color: black;
+}
+
+#wrapper
+{
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+}
+#game-body
+{
+background-image: url("../galery/bg.jpg");
+background-repeat: repeat;
+box-shadow: 0 0 3px red;
+width: 1500px;
+height: 800px;
+border: 1px solid rgba(255,0,0,0.3);
+position: relative;
+animation: backgroundScroll 2s linear infinite;
+
+}
+
+.player {
+    width: 30px;
+    height: 50px;
+    position: absolute;
+}
+
+.laser {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+}
+.enemy {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+}
+
+#score {
+    top: 15px;
+    left: 15px;
+    color: white;
+    font-size: 25px;
+    position: absolute;
+    z-index: 2;
+}
+
+@keyframes backgroundScroll {
+    to {background-position: 0px 330px;}
+}
