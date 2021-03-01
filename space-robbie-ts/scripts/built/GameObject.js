@@ -7,6 +7,7 @@ class GameObject {
         this.y_velocity = object.y_velocity;
         this.ele_width = object.ele_width;
         this.ele_height = object.ele_height;
+        this.dead = false;
     }
     place() {
         Game.gameBody.appendChild(this.element);

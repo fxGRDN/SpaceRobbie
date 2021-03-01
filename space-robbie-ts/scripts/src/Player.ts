@@ -14,6 +14,7 @@ interface LaserConstructor extends GameObjectConstructor {
 class Player extends GameObject {
 
     keys: Keys;
+    laser_cd: number;
 
     constructor(player_object: GameObjectConstructor) {
         super(player_object);
@@ -25,6 +26,8 @@ class Player extends GameObject {
             down: false,
             space: false
         }
+        this.laser_cd = 0;
+
         this.place();
         this.giveControl();
     }
@@ -51,7 +54,12 @@ class Player extends GameObject {
        if(this.keys.left) this.x_pos -= this.x_velocity * delta;
        if(this.keys.down) this.y_pos += this.y_velocity * delta;
        if(this.keys.up) this.y_pos -= this.y_velocity * delta;
-       if(this.keys.space) Laser.create(this.x_pos, this.y_pos, delta, "player");
+       if(this.keys.space && this.laser_cd >= Game.properites.laser_cooldown){
+            Laser.create(this.x_pos, this.y_pos, "player");
+            this.laser_cd = 0;
+            
+       }
+       else this.laser_cd += delta;
 
         this.x_pos = this.stop(this.x_pos, 0, Game.bodyWidth-this.ele_width);
         this.y_pos = this.stop(this.y_pos, 0, Game.bodyHeight-this.ele_height);
@@ -71,7 +79,7 @@ class Laser extends GameObject {
         this.place();
     }
 
-    static create(_x: number, _y: number, delta: number, origin: string){
+    static create(_x: number, _y: number, origin: string){
 
         let LaserPrototype: LaserConstructor = {
             element: Laser.createDOM("laser","apple"),
@@ -89,6 +97,7 @@ class Laser extends GameObject {
     }
 
     static update(delta: number):void {
+        
         Game.objects.Laser.forEach(laser => {
 
                 laser.y_pos += laser.y_velocity * delta;

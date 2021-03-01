@@ -21,8 +21,9 @@ class Game {
     static bodyWidth: number = 1500;
     static bodyHeight: number = 800;
 
-    timer: number;
+    static timer: number = 0;
     score: number;
+    innerTimer: number = 0;
 
     static objects: GameObjects = {
         Player: null,
@@ -33,14 +34,14 @@ class Game {
     static properites: ObjectsProperies = {
         player_speed: 700,
         laser_speed: 600,
-        laser_cooldown: 0.25,
+        laser_cooldown: 0.10,
         enemy_speed: 500,
-        enemy_respawn: 0.1
+        enemy_respawn: 0.25
     }
 
     constructor(){
       
-        this.timer = 0;
+        this.innerTimer = 0;
         this.score = 0;
         this.init()
     }
@@ -51,12 +52,20 @@ class Game {
     }
 
     gameLoop(delta: number) {
-        let newDelta = (delta-this.timer)/1000;
-        this.timer = delta;
+        let newDelta = (delta-Game.timer)/1000;
+        Game.timer = delta;
 
         Game.objects.Player.update(newDelta);
         
         Laser.update(newDelta);
+
+        if(this.innerTimer >= Game.properites.enemy_respawn){
+            Enemy.create();
+            this.innerTimer = 0;
+        }
+        else this.innerTimer += newDelta;
+        
+        Enemy.update(newDelta);
         
         window.requestAnimationFrame(newDelta => { this.gameLoop(newDelta) });
     }

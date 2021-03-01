@@ -6,6 +6,7 @@ interface GameObjectConstructor {
     y_velocity: number;
     ele_width: number;
     ele_height: number;
+    dead?: boolean
 }
 
 
@@ -29,6 +30,7 @@ abstract class GameObject implements GameObjectConstructor {
         this.y_velocity = object.y_velocity;
         this.ele_width = object.ele_width;
         this.ele_height = object.ele_height;
+        this.dead = false;
 
     }
 

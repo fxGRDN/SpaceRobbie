@@ -8,6 +8,7 @@ class Player extends GameObject {
             down: false,
             space: false
         };
+        this.laser_cd = 0;
         this.place();
         this.giveControl();
     }
@@ -46,8 +47,12 @@ class Player extends GameObject {
             this.y_pos += this.y_velocity * delta;
         if (this.keys.up)
             this.y_pos -= this.y_velocity * delta;
-        if (this.keys.space)
-            Laser.create(this.x_pos, this.y_pos, delta, "player");
+        if (this.keys.space && this.laser_cd >= Game.properites.laser_cooldown) {
+            Laser.create(this.x_pos, this.y_pos, "player");
+            this.laser_cd = 0;
+        }
+        else
+            this.laser_cd += delta;
         this.x_pos = this.stop(this.x_pos, 0, Game.bodyWidth - this.ele_width);
         this.y_pos = this.stop(this.y_pos, 0, Game.bodyHeight - this.ele_height);
         Player.updatePos(this);
@@ -59,7 +64,7 @@ class Laser extends GameObject {
         this.origin = laser_object.origin;
         this.place();
     }
-    static create(_x, _y, delta, origin) {
+    static create(_x, _y, origin) {
         let LaserPrototype = {
             element: Laser.createDOM("laser", "apple"),
             x_pos: _x,
